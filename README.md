@@ -54,7 +54,7 @@ Wenn Sie zu diesem Projekt beitragen möchten, erstellen Sie bitte einen Fork de
 
 
 ## Ersteller
-Daniel Martin Fluri
+Daniel Martin Fluri &
 Cem Akkaya
 
 Projektlink: https://github.com/cemmakkaya/fahrgaesteBVB
