@@ -1,5 +1,10 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Diese Klasse repräsentiert die Fahrgastdaten für einen bestimmten Zeitpunkt oder Zeitraum.
+ * Sie wird verwendet, um Daten aus der JSON-Datei zu deserialisieren und zu speichern.
+ *
+ */
 public class PassengerData {
     @JsonProperty("startdatum_kalenderwoche_monat")
     private String startDate;
@@ -16,48 +21,52 @@ public class PassengerData {
     @JsonProperty("datum_der_monatswerte")
     private String monthlyDate;
 
-    // Getter und Setter hier einfügen
-
+    /**
+     * Gibt das Startdatum zurück.
+     * @return Das Startdatum als String.
+     */
     public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
+    /**
+     * Gibt die Anzahl der Fahrgäste zurück.
+     * @return Die Anzahl der Fahrgäste als int.
+     */
     public int getPassengers() {
         return passengers;
     }
 
-    public void setPassengers(int passengers) {
-        this.passengers = passengers;
-    }
-
+    /**
+     * Gibt die Kalenderwoche zurück.
+     * @return Die Kalenderwoche als Integer, oder null wenn nicht verfügbar.
+     */
     public Integer getCalendarWeek() {
         return calendarWeek;
     }
 
-    public void setCalendarWeek(Integer calendarWeek) {
-        this.calendarWeek = calendarWeek;
-    }
-
+    /**
+     * Gibt die Granularität der Daten zurück.
+     * @return Die Granularität als String.
+     */
     public String getGranularity() {
         return granularity;
     }
 
-    public void setGranularity(String granularity) {
-        this.granularity = granularity;
-    }
-
+    /**
+     * Gibt das Datum der Monatswerte zurück.
+     * @return Das Datum der Monatswerte als String, oder null wenn nicht verfügbar.
+     */
     public String getMonthlyDate() {
         return monthlyDate;
     }
 
-    public void setMonthlyDate(String monthlyDate) {
-        this.monthlyDate = monthlyDate;
-    }
-
+    /**
+     * Gibt eine String-Repräsentation des PassengerData-Objekts zurück.
+     * Diese Methode ist nützlich für Debugging-Zwecke.
+     *
+     * @return Eine String-Repräsentation des Objekts.
+     */
     @Override
     public String toString() {
         return "PassengerData{" +

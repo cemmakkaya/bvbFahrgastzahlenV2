@@ -1,15 +1,29 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * Diese Klasse analysiert Fahrgastdaten für verschiedene Zeiträume.
+ */
 public class DataAnalyzer {
     private List<PassengerData> data;
 
+    /**
+     * Konstruktor für den DataAnalyzer.
+     *
+     * @param data Eine Liste von PassengerData-Objekten zur Analyse.
+     */
     public DataAnalyzer(List<PassengerData> data) {
         this.data = data;
     }
 
+    /**
+     * Analysiert die Fahrgastdaten für einen bestimmten Zeitraum.
+     *
+     * @param period Der zu analysierende Zeitraum (Jahr, Jahreszeit, Monat oder Woche).
+     * @return Ein AnalysisResult-Objekt mit den Analyseergebnissen.
+     */
     public AnalysisResult analyzeByPeriod(String period) {
         List<PassengerData> filteredData = filterByPeriod(period);
 
@@ -24,18 +38,35 @@ public class DataAnalyzer {
         return new AnalysisResult(minPassengers, maxPassengers, avgPassengers, period);
     }
 
+    /**
+     * Filtert die Daten nach dem angegebenen Zeitraum.
+     *
+     * @param period Der Zeitraum für die Filterung.
+     * @return Eine gefilterte Liste von PassengerData-Objekten.
+     */
     private List<PassengerData> filterByPeriod(String period) {
-        return data.stream()
-                .filter(d -> matchesPeriod(d, period))
-                .collect(Collectors.toList());
+        List<PassengerData> filteredData = new ArrayList<>();
+        for (PassengerData d : data) {
+            if (matchesPeriod(d, period)) {
+                filteredData.add(d);
+            }
+        }
+        return filteredData;
     }
 
+    /**
+     * Überprüft, ob ein PassengerData-Objekt zum angegebenen Zeitraum passt.
+     *
+     * @param d Das zu überprüfende PassengerData-Objekt.
+     * @param period Der zu überprüfende Zeitraum.
+     * @return true, wenn das Objekt zum Zeitraum passt, sonst false.
+     */
     private boolean matchesPeriod(PassengerData d, String period) {
         LocalDate date = LocalDate.parse(d.getStartDate(), DateTimeFormatter.ISO_DATE);
 
         if (period.matches("\\d{4}")) { // Jahr
             return date.getYear() == Integer.parseInt(period);
-        } else if (period.matches("\\d{4}-Q[1-4]")) { // Jahreszeit (Quartal)
+        } else if (period.matches("\\d{4}-Q[1-4]")) { // Quartal
             int year = Integer.parseInt(period.substring(0, 4));
             int quarter = Integer.parseInt(period.substring(6));
             return date.getYear() == year && ((date.getMonthValue() - 1) / 3 + 1) == quarter;
@@ -48,34 +79,73 @@ public class DataAnalyzer {
         return false;
     }
 
+    /**
+     * Berechnet die minimale Fahrgastanzahl aus den gefilterten Daten.
+     *
+     * @param filteredData Die gefilterte Liste von PassengerData-Objekten.
+     * @return Die minimale Fahrgastanzahl.
+     */
     private int getMinPassengers(List<PassengerData> filteredData) {
-        return filteredData.stream()
-                .mapToInt(PassengerData::getPassengers)
-                .min()
-                .orElse(0);
+        int min = Integer.MAX_VALUE;
+        for (PassengerData d : filteredData) {
+            if (d.getPassengers() < min) {
+                min = d.getPassengers();
+            }
+        }
+        return min == Integer.MAX_VALUE ? 0 : min;
     }
 
+    /**
+     * Berechnet die maximale Fahrgastanzahl aus den gefilterten Daten.
+     *
+     * @param filteredData Die gefilterte Liste von PassengerData-Objekten.
+     * @return Die maximale Fahrgastanzahl.
+     */
     private int getMaxPassengers(List<PassengerData> filteredData) {
-        return filteredData.stream()
-                .mapToInt(PassengerData::getPassengers)
-                .max()
-                .orElse(0);
+        int max = Integer.MIN_VALUE;
+        for (PassengerData d : filteredData) {
+            if (d.getPassengers() > max) {
+                max = d.getPassengers();
+            }
+        }
+        return max == Integer.MIN_VALUE ? 0 : max;
     }
 
+    /**
+     * Berechnet die durchschnittliche Fahrgastanzahl aus den gefilterten Daten.
+     *
+     * @param filteredData Die gefilterte Liste von PassengerData-Objekten.
+     * @return Die durchschnittliche Fahrgastanzahl.
+     */
     private double getAveragePassengers(List<PassengerData> filteredData) {
-        return filteredData.stream()
-                .mapToInt(PassengerData::getPassengers)
-                .average()
-                .orElse(0);
+        if (filteredData.isEmpty()) {
+            return 0;
+        }
+        int sum = 0;
+        for (PassengerData d : filteredData) {
+            sum += d.getPassengers();
+        }
+        return (double) sum / filteredData.size();
     }
 }
 
+/**
+ * Diese Klasse repräsentiert das Ergebnis einer Fahrgastdatenanalyse.
+ */
 class AnalysisResult {
     private final int minPassengers;
     private final int maxPassengers;
     private final double avgPassengers;
     private final String period;
 
+    /**
+     * Konstruktor für ein AnalysisResult-Objekt.
+     *
+     * @param minPassengers Die minimale Fahrgastanzahl.
+     * @param maxPassengers Die maximale Fahrgastanzahl.
+     * @param avgPassengers Die durchschnittliche Fahrgastanzahl.
+     * @param period Der analysierte Zeitraum.
+     */
     public AnalysisResult(int minPassengers, int maxPassengers, double avgPassengers, String period) {
         this.minPassengers = minPassengers;
         this.maxPassengers = maxPassengers;
@@ -83,6 +153,11 @@ class AnalysisResult {
         this.period = period;
     }
 
+    /**
+     * Gibt eine String-Repräsentation des Analyseergebnisses zurück.
+     *
+     * @return Eine formatierte String-Darstellung des Analyseergebnisses.
+     */
     @Override
     public String toString() {
         return String.format("Zeitraum: %s%nKleinste Fahrgastanzahl: %d%nGrösste Fahrgastanzahl: %d%nDurchschnittliche Fahrgastanzahl: %.2f",
