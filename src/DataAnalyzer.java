@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Diese Klasse analysiert Fahrgastdaten für verschiedene Zeiträume.
+ *
  */
 public class DataAnalyzer {
     private List<PassengerData> data;
@@ -46,7 +47,8 @@ public class DataAnalyzer {
      */
     private List<PassengerData> filterByPeriod(String period) {
         List<PassengerData> filteredData = new ArrayList<>();
-        for (PassengerData d : data) {
+        for (int i = 0; i < data.size(); i++) {
+            PassengerData d = data.get(i);
             if (matchesPeriod(d, period)) {
                 filteredData.add(d);
             }
@@ -86,13 +88,17 @@ public class DataAnalyzer {
      * @return Die minimale Fahrgastanzahl.
      */
     private int getMinPassengers(List<PassengerData> filteredData) {
-        int min = Integer.MAX_VALUE;
-        for (PassengerData d : filteredData) {
-            if (d.getPassengers() < min) {
-                min = d.getPassengers();
+        if (filteredData.isEmpty()) {
+            return 0;
+        }
+        int min = filteredData.get(0).getPassengers();
+        for (int i = 1; i < filteredData.size(); i++) {
+            int passengers = filteredData.get(i).getPassengers();
+            if (passengers < min) {
+                min = passengers;
             }
         }
-        return min == Integer.MAX_VALUE ? 0 : min;
+        return min;
     }
 
     /**
@@ -102,13 +108,17 @@ public class DataAnalyzer {
      * @return Die maximale Fahrgastanzahl.
      */
     private int getMaxPassengers(List<PassengerData> filteredData) {
-        int max = Integer.MIN_VALUE;
-        for (PassengerData d : filteredData) {
-            if (d.getPassengers() > max) {
-                max = d.getPassengers();
+        if (filteredData.isEmpty()) {
+            return 0;
+        }
+        int max = filteredData.get(0).getPassengers();
+        for (int i = 1; i < filteredData.size(); i++) {
+            int passengers = filteredData.get(i).getPassengers();
+            if (passengers > max) {
+                max = passengers;
             }
         }
-        return max == Integer.MIN_VALUE ? 0 : max;
+        return max;
     }
 
     /**
@@ -122,8 +132,8 @@ public class DataAnalyzer {
             return 0;
         }
         int sum = 0;
-        for (PassengerData d : filteredData) {
-            sum += d.getPassengers();
+        for (int i = 0; i < filteredData.size(); i++) {
+            sum += filteredData.get(i).getPassengers();
         }
         return (double) sum / filteredData.size();
     }
