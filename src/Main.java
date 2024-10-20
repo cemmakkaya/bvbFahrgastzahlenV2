@@ -15,7 +15,7 @@ public class Main {
      * @param args Kommandozeilenargumente (werden nicht verwendet)
      */
     public static void main(String[] args) {
-        DataLoader loader = new DataLoader("/Users/cemakkaya/IdeaProjects/bvbzahlen/src/100075.json");
+        DataLoader loader = new DataLoader("/Users/cemakkaya/IdeaProjects/fahrgaesteBVB/src/100075.json");
         List<PassengerData> data = loader.loadData();
 
         if (data == null || data.isEmpty()) {
@@ -28,6 +28,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            System.out.println("------------------Version 2------------------");
+            System.out.println("");
             System.out.println("Geben Sie einen Zeitraum ein (Jahr, Quartal, Monat oder Woche):");
             System.out.println("Oder geben Sie 'exit' ein, um das Programm zu beenden.");
             System.out.println("");
