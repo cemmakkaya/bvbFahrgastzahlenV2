@@ -6,6 +6,8 @@ import java.util.Scanner;
  * Diese Klasse enthält den Einstiegspunkt des Programms und steuert den Hauptablauf
  * der Datenanalyse und Benutzerinteraktion.
  *
+ * @author Cem Akkaya & Daniel Fluri
+ * @version 2.0
  */
 public class Main {
     /**

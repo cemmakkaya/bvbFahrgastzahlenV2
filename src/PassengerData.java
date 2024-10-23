@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Diese Klasse repräsentiert die Fahrgastdaten für einen bestimmten Zeitpunkt oder Zeitraum.
  * Sie wird verwendet, um Daten aus der JSON-Datei zu deserialisieren und zu speichern.
  *
+ * @author Cem Akkaya & Daniel Fluri
+ * @version 2.0
  */
 public class PassengerData {
     @JsonProperty("startdatum_kalenderwoche_monat")

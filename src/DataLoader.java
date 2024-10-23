@@ -7,6 +7,9 @@ import java.util.List;
 /**
  * Diese Klasse ist verantwortlich für das Laden von Fahrgastdaten aus einer JSON-Datei.
  * Sie verwendet Jackson für die JSON-Deserialisierung.
+ *
+ * @author Cem Akkaya & Daniel Fluri
+ * @version 2.0
  */
 public class DataLoader {
     private String fileName;
