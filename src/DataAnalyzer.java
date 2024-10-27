@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Diese Klasse analysiert Fahrgastdaten für verschiedene Zeiträume.
  *
- * @author Cem Akkaya & Daniel Fluri
+ * @author Cem Akkaya & Flower Dan Fluri
  * version 2.0
  */
 public class DataAnalyzer {
